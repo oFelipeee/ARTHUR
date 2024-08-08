@@ -1,10 +1,12 @@
+const User = require("../models/User");
+
 const UserController = {
     // Criando o user
     create: async (req, res) =>{
         try {
-            const{ nome, idade, senha, email} = req.body;           
+            const{ nome, senha, email} = req.body;           
 
-            await User.create({nome, senha, email});
+           const userCriado = await User.create({nome, senha, email});
 
             return res.status(200).json({
                 msg: 'Usuario criado com sucesso!',
@@ -20,11 +22,11 @@ const UserController = {
     update: async (req, res) =>{
         try {
             const { id }  = req.params;
-            const{ nome, idade, senha, email} = req.body;
+            const{ nome, senha, email} = req.body;
 
             console.log("Atualizando o objeto");
             console.log({ id });
-            console.log({nome, idade, senha, email });
+            console.log({nome, senha, email });
 
 
             return res.status(200).json({
