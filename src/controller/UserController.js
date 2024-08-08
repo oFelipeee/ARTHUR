@@ -8,6 +8,8 @@ const UserController = {
 
            const userCriado = await User.create({nome, senha, email});
 
+
+
             return res.status(200).json({
                 msg: 'Usuario criado com sucesso!',
                 user: userCriado
@@ -41,9 +43,13 @@ const UserController = {
     // Listando todo os users
     getAll: async (req, res) =>{
         try {
+
+//    Listar todos
+            const allUser = await User.findAll();
+    
             return res.status(200).json({
                 msg: 'Usuarios encontrados!!',
-                usuarios: {}
+                usuarios: allUser
             });
             
         } catch (error) {
@@ -54,9 +60,19 @@ const UserController = {
     // Listando um user específico
     getOne: async (req, res) =>{
         try {
+
+            const { id }  = req.params;
+            const usuarioEncontrado = await User.findByPk(id);
+
+            if(usuarioEncontrado == null){
+                return res.status(404).json({
+                    msg: "Usuário encontrado"
+                })
+            }
+
             return res.status(200).json({
                 masg: 'Usuario encontrado com sucesso!!',
-                usuarios: {}
+                usuarios: usuarioEncontrado
             });
             
         } catch (error) {
