@@ -1,52 +1,49 @@
-const User = require("../models/User");
+const Cliente = require("../models/Cliente");
 
-const UserController = {
-    // Criando o user
+const ClienteController = {
+    // Criando o cliente
     create: async (req, res) =>{
-        try {
-            const{ nome, senha, email} = req.body;           
+        try{
+            const { nome, idade, email, CPF, telefone} = req.body;
 
-           const userCriado = await User.create({nome, senha, email});
-
-
+            const clienteCriado = await Cliente.create({nome, idade, email, CPF, telefone});
 
             return res.status(200).json({
-                msg: 'Usuario criado com sucesso!',
-                user: userCriado
+                msg: 'Cliente criado com sucesso!',
+                cliente: clienteCriado
             })
-            
-        } catch (error) {
+        }catch (error) {
             console.error(error);
-            return res.status(500).json({msg: 'Acione o suporte'});
+            return res.status(500).json({msg: 'Acione o suporte'})
         }
     },
 
 
-    // Atualizar o user
+    // atualizar o cliente
     update: async (req, res) =>{
         try {
             const { id }  = req.params;
-            const{ nome, senha, email} = req.body;
+            const{ nome, idade, CPF, email, telefone} = req.body;
 
             console.log("Atualizando o objeto");
             console.log({ id });
-            console.log({nome, senha, email });
+            console.log({nome, idade, CPF, email, telefone });
 
-            const userUpadate = await User.findByPk(id);
+            const clienteUpdate = await User.findByPk(id);
 
-            if(userUpadate == null) {
+            if(clienteUpdate == null) {
                 return res.status(404).json({
-                    msg: "Usuario não enontrado"
+                    msg: "Cliente não enontrado"
                 })
             }
 
-            const updated = await userUpadate.update({
-                nome, senha, email
+            const updated = await clienteUpdate.update({
+                nome, idade, CPF, email, telefone
             });
 
             if(updated) {
                 return res.status(200).json({
-                msg: "Usuário atualizado com sucesso!",
+                msg: "Cliente atualizado com sucesso!",
                 });
             }
 
@@ -67,7 +64,7 @@ const UserController = {
         try {
 
 //    Listar todos
-            const allUser = await User.findAll();
+            const allClientes = await User.findAll();
     
             return res.status(200).json({
                 msg: 'Usuarios encontrados!!',
@@ -80,56 +77,49 @@ const UserController = {
         }
     },
 
-
-    // Listando um user específico
     getOne: async (req, res) =>{
-        try {
+        try{
+            const { id } = req.params;
+            const clienteEncontrado = await Cliente.findByPk(id);
 
-            const { id }  = req.params;
-            const usuarioEncontrado = await User.findByPk(id);
-
-            if(usuarioEncontrado == null){
+            if(clienteEncontrado == null){
                 return res.status(404).json({
-                    msg: "Usuário encontrado"
+                    msg: "Cliente encontrado"
                 })
             }
 
             return res.status(200).json({
-                masg: 'Usuario encontrado com sucesso!!',
-                usuarios: usuarioEncontrado
+                msg: "Cliente encontrado com sucesso!!",
+                clientes: clienteEncontrado
             });
-            
-        } catch (error) {
+        }catch (error) {
             console.error(error);
             return res.status(500).json({msg: 'Acione o suporte'});
         }
     },
 
-
-    // Deletando o user
+    // Deletando o cliente
     delete: async (req, res) =>{
-        try {
+        try{
             const { id } = req.params;
-            const userFinded = await User.findByPk(id);
+            const clienteFinded = await Cliente.findByPk(id);
 
-            if(userFinded == null){
+            if(clienteFinded== null){
                 return res.status(404).json({
-                    msg: "User não encontrado"
+                    msg: "Cliente não encontrado"
                 })
             }
 
-            await userFinded.destroy();
+            await clienteFinded.destroy();
 
             return res.status(200).json({
-                masg: 'Usuario deletado com sucesso!!',
+                msg: 'Cliente deletado com sucesso!!',
             });
-            
-        } catch (error) {
+        }catch (error){
             console.error(error);
             return res.status(500).json({msg: 'Acione o suporte'});
         }
     }
-
 }
 
-module.exports = UserController;
+module.exports = ClienteController;
