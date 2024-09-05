@@ -12,6 +12,8 @@ const UploadController = {
         // dados da imagem
         const imageData = req.file.buffer;
 
+        console.log(imageData)
+
         // salvar a imagem original do disco
         await sharp(imageData).toFile(`uploads/${imageName}`);
 

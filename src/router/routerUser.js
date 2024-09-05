@@ -1,7 +1,8 @@
 const { Router } = require("express");
-const UserController = require("../controller/UserController")
-
 const router = Router();
+const UserController = require("../controller/UserController");
+const { validateUser, validateUserId } = require("../middlewares/ValidateUser");
+
 // Configurando as Rotas (CRUD)
 router.post('/', validateUser, (req, res) => {
     UserController.create(req, res)
