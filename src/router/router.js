@@ -1,8 +1,12 @@
-const {Router} = require("express");
+const { Router } = require("express");
 const UserController = require("../controller/UserController");
 const authenticateToken = require('../middlewares/authenticateToken');
+const uploadRoutes = require('./routerUpload');
 
 const router = Router();
+
+
+router.user('/image', uploadRoutes);
 
 router.use('/user', userRoutes);
 

@@ -2,11 +2,12 @@ const multer = require('multer');
 const sharp = require('sharp');
 
 const fs = require('fs');
+const path = require('path');
 
 const UploadController = {
     uploadImage: async (req, res) => {
         // nome da imagem
-        const imageName = req.file.originalName;
+        const imageName = req.file.originalname;
 
         // dados da imagem
         const imageData = req.file.buffer;
@@ -39,6 +40,16 @@ const UploadController = {
         });
 
 
+
+    },
+
+    getImage: (req, res) => {
+        const imageName = req.params.imageName;
+
+        const imagePath = path.join(__dirname, '..', '..', 'uploads', imageName);
+        return res.sendFile(imagePath);
     }
 
 }
+
+module.exports = UploadController;

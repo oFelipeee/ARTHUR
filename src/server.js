@@ -9,26 +9,26 @@ app.use(express.json());
 app.use('/api/user', router);
 
 // RES - response
-app.get('/healthcheck', (req, res) =>{
+app.get('/healthcheck', (req, res) => {
     return res.status(200).json({
         msg: 'Estamos vivos!',
-        alive:true
+        alive: true
     });
 });
 
 // listen ouvir, ou seja, em qual porta está funcionando a aplicação
 sequelize.authenticate()
-.then(async() => {
-    console.log("Connexão establecida com sucesso");
-    await sequelize.sync();
-})
-.then(() =>{
-    app.listen(process.env.PORT == null ? 8080 : process.env.PORT, () =>{
-        console.log("==========================");
-        console.log("FUNCIONANDO NA PORTA 8080");
-        console.log("==========================");
+    .then(async () => {
+        console.log("Connexão establecida com sucesso");
+        await sequelize.sync();
+    })
+    .then(() => {
+        app.listen(process.env.PORT == null ? 8080 : process.env.PORT, () => {
+            console.log("==========================");
+            console.log("FUNCIONANDO NA PORTA 8080");
+            console.log("==========================");
+        });
+    })
+    .catch((error) => {
+        console.log("Erro ao se conectar com o banco:", error);
     });
-})
-.catch((error) => {
-    console.log("Erro ao se conectar com o banco:", error);
-});
