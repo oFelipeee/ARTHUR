@@ -1,6 +1,6 @@
-const validateProducts = (req, res, next) =>{
+const validateProducts = (req, res, next) => {
 
-    if(!nome || !prec || !quantidade){
+    if (!nome || !prec || !quantidade) {
         return res.status(400).json({
             msg: "Campos inválidos, revise meu caro amigo"
         });
@@ -11,7 +11,7 @@ const validateProducts = (req, res, next) =>{
 const validateProductsId = (req, res, next) => {
     const { id } = req.params;
 
-    if(!id){
+    if (!id) {
         return res.status(400).json({
             msg: "Faltando parametro"
         });
@@ -19,4 +19,4 @@ const validateProductsId = (req, res, next) => {
     return next();
 };
 
-module.exports = {validateProducts, validateProductsId};
+module.exports = { validateProducts, validateProductsId };

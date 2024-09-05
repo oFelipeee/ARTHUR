@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const router = require('./router/router');
 const sequelize = require('./config/config');
@@ -22,7 +23,7 @@ sequelize.authenticate()
     await sequelize.sync();
 })
 .then(() =>{
-    app.listen(8080, () =>{
+    app.listen(process.env.PORT == null ? 8080 : process.env.PORT, () =>{
         console.log("==========================");
         console.log("FUNCIONANDO NA PORTA 8080");
         console.log("==========================");
