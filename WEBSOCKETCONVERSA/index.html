@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/socket.io/socket.io.js"></script>
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <label for="username">Nome: </label>
+        <input type="text" id="username">
+        <button id="connect">Conectar</button>
+    </div>
+
+    <div id="chat" style="display: none;">
+        <div id="messages"></div>
+        <form action="form" action="">
+            <input id="input" autocomplete="off">
+            <button>Enviar</button>
+        </form>
+        <button id="disconnect">Desconectar</button>
+    </div>
+
+    <script>
+        const socket = io();
+        const chatDiv = document.getElementById('chat');
+        const connectButton = document.getElementById("connect");
+        const disconnectButton = document.getElementById("diconect");
+        const usernameInput = document.getElementById("username");
+        const messageDiv = document.getElementById("messages");
+        
+        connectButton.addEventListener('click', () =>{
+            const username = usernameInput.value;
+            if (username) {
+                socket.emit('set username', username);
+                chatDiv.style.display = 'block';
+            } else {
+                ALERT('Por favor preencher, insira o nome');
+            }
+        });
+
+        document.getElementById('form').addEventListener('submit', (e) =>{
+            e.preventDefault;
+            const input = document.getElementById('input');
+            socket.emit('chat message', input.value);
+            input.value = '';
+        })
+    </script>
+   
+</body>
+</html>
